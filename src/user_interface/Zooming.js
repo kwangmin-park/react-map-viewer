@@ -2,23 +2,23 @@ function trackTransforms(ctx) {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
     let xform = svg.createSVGMatrix();
 
-    let scale = ctx.scale;
+    const scale = ctx.scale;
     ctx.scale = function(sx,sy){
         xform = xform.scaleNonUniform(sx,sy);
         return scale.call(ctx,sx,sy);
     };
 
-    let rotate = ctx.rotate;
+    const rotate = ctx.rotate;
     ctx.rotate = function(radians){
         xform = xform.rotate(radians*180/Math.PI);
         return rotate.call(ctx,radians);
     };
-    let translate = ctx.translate;
+    const translate = ctx.translate;
     ctx.translate = function(dx,dy){
         xform = xform.translate(dx,dy);
         return translate.call(ctx,dx,dy);
     };
-    let transform = ctx.transform;
+    const transform = ctx.transform;
     ctx.transform = function(a,b,c,d,e,f){
         let m2 = svg.createSVGMatrix();
         m2.a=a; m2.b=b; m2.c=c; m2.d=d; m2.e=e; m2.f=f;
@@ -26,7 +26,7 @@ function trackTransforms(ctx) {
         return transform.call(ctx,a,b,c,d,e,f);
     };
 
-    let pt  = svg.createSVGPoint();
+    let pt = svg.createSVGPoint();
     ctx.transformedPoint = function(x,y){
         pt.x=x; pt.y=y;
         return pt.matrixTransform(xform.inverse());
