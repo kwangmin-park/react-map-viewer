@@ -26,7 +26,7 @@ const App = () =>  {
             </div>
             <hr />
             <div>
-                <Canvas style={{width:2000, height: 2000}} MainFileHeader={mainFileHeader} MainFileRecord={mainFileRecord} />
+                <Canvas MainFileHeader={mainFileHeader} MainFileRecord={mainFileRecord} />
             </div>
         </div>
     );

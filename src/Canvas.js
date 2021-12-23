@@ -15,7 +15,7 @@ const Canvas = props => {
         zooming(context, canvas, MainFileHeader, MainFileRecord);
     }, [MainFileHeader, MainFileRecord]);
 
-    return <canvas style={{backgroundColor: 'rgb(51, 153, 255)'}} width={window.innerWidth} height={window.innerHeight} ref={canvasRef} />
+    return <canvas style={{backgroundColor: 'rgb(51, 153, 255)'}} width={window.innerWidth-200} height={window.innerHeight-200} ref={canvasRef} />
 }
 
 export default Canvas
