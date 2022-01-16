@@ -10,41 +10,6 @@ function MainFileRecordParser (fileText, length) {
     let position = 100;
     const record = [];
 
-    const RecordHeaderParsing = () => {
-        const recordHeader = {
-            recordNumber: fileText.getInt32(position),
-            contentLength: fileText.getInt32(position + 4)
-        };
-        position += 8;
-        return recordHeader;
-    }
-
-    const RecordContentParsing = () => {
-        let recordContent = {};
-        const recordShapeType = fileText.getInt32(position, true);
-
-        switch(recordShapeType) {
-            case shapeType.nullShape:
-                console.log(NullShape());
-                break;
-            case shapeType.point:
-                recordContent.shapeType = shapeType.point;
-                position += 4;
-                recordContent = Point();
-                break;
-            case shapeType.multiPoint:
-                recordContent = MultiPoint();
-                break;
-            case shapeType.polyLine:
-                recordContent = PolyLine();
-                break;
-            case shapeType.polygon:
-                recordContent = Polygon();
-        }
-
-        return recordContent;
-    }
-
     const NullShape = () => {
         return 0;
     }
@@ -122,6 +87,34 @@ function MainFileRecordParser (fileText, length) {
             content.points.push(Point());
         }
         return content;
+    }
+
+    const RecordHeaderParsing = () => {
+        const recordHeader = {
+            recordNumber: fileText.getInt32(position),
+            contentLength: fileText.getInt32(position + 4)
+        };
+        position += 8;
+        return recordHeader;
+    }
+
+    const RecordContentParsing = () => {
+        const recordShapeType = fileText.getInt32(position, true);
+
+        switch(recordShapeType) {
+            case shapeType.nullShape:
+                return NullShape();
+            case shapeType.point:
+                return Point();
+            case shapeType.multiPoint:
+                return MultiPoint();
+            case shapeType.polyLine:
+                return PolyLine();
+            case shapeType.polygon:
+                return Polygon();
+        }
+
+        return {};
     }
 
     while(position < length * 2) {

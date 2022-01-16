@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useCallback, useState} from 'react'
 import Canvas from './Canvas.js';
 import MainFileHeaderParser from './parser/MainFileHeaderParser';
 import MainFileRecordParser from "./parser/MainFileRecordParser";
@@ -7,7 +7,7 @@ const App = () =>  {
     const [ mainFileHeader, setMainFileHeader ] = useState({});
     const [ mainFileRecord, setMainFileRecord ] = useState([]);
 
-    const onChange = (e) => {
+    const onChange = useCallback((e) => {
         const fileReader = new FileReader();
         fileReader.readAsArrayBuffer(e.target.files[0]);
         fileReader.onload = function(e) {
@@ -17,7 +17,7 @@ const App = () =>  {
             setMainFileHeader(mainFileHeader);
             setMainFileRecord(record);
         }
-    }
+    }, []);
 
     return (
         <div>
